@@ -11,7 +11,9 @@ class RecipeService
     {
         $url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
 
-        $response = Http::withoutVerifying()->get($url);
+        $response = Http::withoutVerifying()
+            ->timeout(30)
+            ->get($url);
 
         if ($response->successful()) {
             return collect($response->json('meals') ?? []);
